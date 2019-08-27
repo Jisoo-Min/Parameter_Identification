@@ -39,16 +39,17 @@ Slot vector  = [11, 11, 3, 9, 9, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
 
 2. Model generation<br/>
 With several settings, instanciate the model. For example, it takes the number of hidden layers, context-size, dimension of word embedding, etc.
+We use two RNN model: Elman-RNN and Jordan-RNN
 
 3. Training <br/>
 The training operate according to the epochs and the number of training data. 
-while training
+For each epoch, the best f1-score is recorded. 
 
-4. evaluation <br/>
+4. Evaluation <br/>
 During training, the best f1-score is recorded. At the end of the training, the best f1-score is calculated in testset.
 
 #### How to run
-To run this code, python3 must be installed. In addition, python libraries (numpy, theano, and keras) are required. See requirements in RNN folder.
+To run this code, python3 must be installed. In addition, python libraries (numpy, theano, and keras) are required. See [requirements](https://github.com/jiisoo/Parameter-Identification/blob/master/RNN/requirements.txt) in RNN folder.
 
 In parent folder of root directory, <br/>
 Run Elman-RNN.<br/>
