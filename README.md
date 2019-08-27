@@ -23,7 +23,44 @@ if a token is the beginning of a chunk, it is tagged B such as Boston, New, and 
 We identify parameters using RNN and CRF to do slot filling.
 
 
-## RNN
+## RNN <br/>
+RNN runs through four phases: data processing, model generation, training, and evaluation
+1. Data Processing<br/>
+We have Codingbat dataset we made. It has queries and correspponing slot names. Because the data we made were divided into two files (word with slot ID and slot name with slot ID), the process is binding them together.
+
+| Given | an      | array   | of      | int,    | return | the | sum | of | all | the | elements. |
+|-------|---------|---------|---------|---------|--------|-----|-----|----|-----|-----|-----------|
+| O     | B-param | I-param | I-param | I-param | O      | O   | O   | O  | O   | O   | O         |
+
+At the end of the process, we can get two sets of vectors: one is a set of query vectors embedded with one-hot encoding and the others is a set of vectors made of slot IDs.
+
+Query vector = [734, 379, 1089, 814, 957, 1149, 1374, 776,  831, 573, 379, 375, 615, 1000, 1395, 188, 1358, 733, 1334, 1156, 614, 414, 261, 1358, 622, 1334, 1156, 615],<br/>
+Slot vector  = [11, 11, 3, 9, 9, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11]
+
+2. Model generation<br/>
+With several settings, instanciate the model. For example, it takes the number of hidden layers, context-size, dimension of word embedding, etc.
+
+3. Training <br/>
+The training operate according to the epochs and the number of training data. 
+while training
+
+4. evaluation <br/>
+During training, the best f1-score is recorded. At the end of the training, the best f1-score is calculated in testset.
+
+#### How to run
+To run this code, python3 must be installed. In addition, python libraries (numpy, theano, and keras) are required. See requirements in RNN folder.
+
+In parent folder of root directory, <br/>
+Run Elman-RNN.<br/>
+```shell
+python3 Parameter-Identification/RNN/examples/elman-forward.py
+```
+
+Run Jordan-RNN.<br/>
+```shell
+python3 Parameter-Identification/RNN/examples/jordan-forward.py
+```
+
 
 
 ## CRF
