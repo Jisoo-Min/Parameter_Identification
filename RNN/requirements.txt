@@ -1,6 +1,5 @@
 # `pip3 install -r requirements.txt`
 
-keras
-numpy
-Theano
+numpy==1.8.0
+Theano==1.0.4
 
