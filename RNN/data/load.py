@@ -1,6 +1,8 @@
 import os
 import json
 import random
+
+
 from enum import Enum
 
 """Label
@@ -8,6 +10,13 @@ All the labels we made are in Label class.
 Each labels is mapped as a number.
 """
 class Label(Enum):
+    B_param   = 1
+    B_gparam  = 2
+    I_param   = 3
+    I_gparam  = 4
+    O         = 0
+
+"""
     B_2param  = 0
     B_2param2 = 1
     B_3param  = 2
@@ -21,6 +30,7 @@ class Label(Enum):
     I_param2  = 10
     O         = 11
 
+"""
 
 """get_data
 Import data that is correspoding to categories.
@@ -38,10 +48,10 @@ train_y,   valid_y,   test_y   : Answers mapped to the label (Label Class)
 """
 def get_data(data_category):
 
-	with open('./Parameter-Identification/RNN/data/data.json') as f:
+	with open('./jisooparam/data/data.json') as f:
 		data_query = json.load(f)
 
-	with open('./Parameter-Identification/RNN/data/label.json') as f:
+	with open('./jisooparam/data/label.json') as f:
 		data_slots = json.load(f)
     
 	split_length = 62
@@ -94,25 +104,46 @@ make_slot : Make the data which contain slots (slot name)
 
 def get_slot(input_keys, input_data):
 
-	with open('./Parameter-Identification/RNN/data/label.json') as f:
+	with open('./jisooparam/data/label.json') as f:
 		data_slots = json.load(f)
 
 	total_slot = []
     
+    # loop for all problems
 	for idx in range(len(input_keys)):
 		query = [] # we assigned before per question 
 		label = data_slots[input_keys[idx]] # label in each question
 		slots = []  # integrate label : the output
 
+
 		for l in input_data[idx]: # l : label
 			int_label = int(l[1]) # if it is "O"
+
 			if(int_label == 0):
-				slots.append(Label.O.value)
+				slots.append(Label['O'].value)
 	            #query.append(int(l[1]))
 			else:                 # if it is not "O", such as "B" and "I"
 				label_name = label[int_label-1]
 				label_name = label_name.replace("-", "_") # we have "-" in string, so change it as "_"
-				slots.append(Label[label_name].value)
+				if(label_name == 'B_2param' or
+				   label_name == 'B_2param2' or
+				   label_name == 'B_3param'):
+					slots.append(Label['B_gparam'].value)
+
+				elif(label_name == 'I_2param' or
+				   label_name == 'I_2param2' or
+				   label_name == 'I_3param'):
+					slots.append(Label['I_gparam'].value)
+
+				elif(label_name == 'B_param' or
+					label_name == 'B_param2' or
+					label_name == 'B_param3'):
+					slots.append(Label['B_param'].value)
+
+				elif(label_name == 'I_param' or
+					label_name == 'I_param2'):
+					slots.append(Label['I_param'].value)
+
 
 	            #query.append(int(l[1]))
 	            
@@ -121,8 +152,6 @@ def get_slot(input_keys, input_data):
 
 	return total_slot
 
-        
-        
 
     
 """
@@ -160,9 +189,9 @@ Number is represented as DIGIT * len(number)
 """    
 def get_voca():
 
-	with open('./Parameter-Identification/RNN/data/data.json') as f:
+	with open('./jisooparam/data/data.json') as f:
 		data_query = json.load(f)
-	with open('./Parameter-Identification/RNN/data/label.json') as f:
+	with open('./jisooparam/data/label.json') as f:
 		data_slots = json.load(f)
 
 	keys = data_query.keys()
