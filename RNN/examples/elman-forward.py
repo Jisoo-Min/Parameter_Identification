@@ -7,10 +7,10 @@ import random
 import pprint
 import numpy as np
 sys.path.append(".")
-from is13.data import load
-from is13.rnn.elman import model
-from is13.metrics.accuracy import conlleval
-from is13.utils.tools import shuffle, minibatch, contextwin
+from Parameter_Identification.data import load
+from Parameter_Identification.rnn.elman import model
+from Parameter_Identification.metrics.accuracy import conlleval
+from Parameter_Identification.utils.tools import shuffle, minibatch, contextwin
 
 ##########################################################
 #
